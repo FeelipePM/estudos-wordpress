@@ -1,9 +1,44 @@
-<?php get_header(); ?>
+<?php
+$queryTaxonomy = array_key_exists('taxonomy', $_GET);
+if($queryTaxonomy && $_GET['taxonomy'] === '') {
+	wp_redirect( home_url() );
+}
+$css_escolhido = 'index';
+require_once('header.php');
+?>
 <main class="home-main">
 	<div class="container">
 
+<?php $taxonomias = get_terms('localizacao'); ?>
+		<form class="busca-localizacao-form" action="<?= bloginfo('url'); ?>">
+			<div class="taxonomy-select-wrapper">
+				<select name="taxonomy">
+					<option value="">Todos os Imóveis</option>
+					<?php foreach($taxonomias as $taxonomia) { ?>
+					<option value="<?= $taxonomia->slug; ?>"><?= $taxonomia->name; ?></option>
+					<?php } ?>
+				</select>
+			</div>
+			<button type="submit">Filtar</button>
+		</form>	
+
 		<?php 
-			$args = array( 'post_type' => 'imovel' );
+
+		if($queryTaxonomy) {
+			$taxQuery = array(
+				array(
+					'taxonomy' => 'localizacao',
+					'field' => 'slug',
+					'terms' => $_GET['taxonomy']
+				)
+			);
+		}
+
+			$args = array( 
+				'post_type' => 'imovel',
+				'tax_query' => $taxQuery
+		);
+
 			$loop = new WP_Query( $args );
 			if( $loop->have_posts() ) { ?>
 			<ul class="imoveis-listagem">
