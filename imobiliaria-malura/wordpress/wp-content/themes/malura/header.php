@@ -6,9 +6,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" type="text/css" href="<?= $home; ?>/reset.css">
-  <link rel="stylesheet" type="text/css" href="<?= $home; ?>/style.css">
+  <link rel="stylesheet" type="text/css" href="<?= $home; ?>/assets/css/reset.css">
+  <link rel="stylesheet" type="text/css" href="<?= $home; ?>/assets/css/base.css">
+  <link rel="stylesheet" type="text/css" href="<?= $home; ?>/assets/css/header.css">
+
+  <link rel="stylesheet" href="<?= $home; ?>/assets/css/<?= $css_escolhido; ?>.css">
+
     <?php wp_head(); ?>
-  <title>Imobiliária Malura</title>
+    <title>
+        <?php geraTitle(); ?>
+    </title>
+
 </head>
 <body>
+
+<header>
+    <div class="container">
+        <?php
+            $args = array(
+                'theme_location' => 'header-menu',
+            'menu' => 'Menu principal'
+            );
+            wp_nav_menu( $args );
+        ?>
+    </div>
+</header>
