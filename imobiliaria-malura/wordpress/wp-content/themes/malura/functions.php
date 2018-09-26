@@ -181,3 +181,7 @@ function salvar_meta_info_imoveis( $post_id ) {
 }
 
 add_action('save_post', 'salvar_meta_info_imoveis');
+
+function enviar_e_checar_email($nome, $email, $mensagem) {
+	return wp_mail( 'Feelipe.PM@gmail.com', 'Email Malura', 'Nome: ' . $nome . "\n" . $mensagem  );
+}
